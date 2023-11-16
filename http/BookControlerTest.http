@@ -1,3 +1,13 @@
+### Insert Book
+POST http://localhost:8080/api/v1/books/
+Content-Type: application/json
+
+{
+  "author": "Karlson",
+  "title": "Life as me"
+}
+
+
 ### Find all
 GET http://localhost:8080/api/v1/books/
 
@@ -7,4 +17,15 @@ GET http://localhost:8080/api/v1/books/1
 
 
 ### Delete by id
-DELETE http://localhost:8080/api/v1/books/99
+DELETE http://localhost:8080/api/v1/books/2
+
+
+### Update a book
+PUT http://localhost:8080/api/v1/books/
+Content-Type: application/json
+
+{
+  "id": 2,
+  "author": "K Karlson",
+  "title": "Life as me second edition"
+}

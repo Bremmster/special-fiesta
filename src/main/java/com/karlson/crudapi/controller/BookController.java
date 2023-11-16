@@ -20,13 +20,14 @@ public class BookController {
     }
 
     //    C - Insert
-    @PostMapping("") // todo ad validation
+    @PostMapping("/") // todo ad validation
     public void create(@RequestBody Book book) {
         repository.save(book);
     }
 
     //    R - SelectOne
-    @GetMapping("/{id}") // todo return a response body
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @GetMapping("/{id}") // todo return a response body?
     public Optional<Book> findById(@PathVariable Integer id) {
         return repository.findById(id);
     }
@@ -34,9 +35,9 @@ public class BookController {
 
     //    U - Update
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/{id}")
-    public void update(@RequestBody Book book, @PathVariable Integer id) {
-        if (!repository.existsById(id)) {
+    @PutMapping("/") // todo figure out how this works. ATM @PathVariable is irrelevant to the updated book.
+    public void update(@RequestBody Book book) {
+        if (!repository.existsById(book.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found!");
         }
         repository.save(book);
@@ -52,7 +53,7 @@ public class BookController {
 
 
     //    L - SelectAll
-    @RequestMapping("")
+    @GetMapping("/")
     public List<Book> findAll() {
         return repository.findAll();
     }
