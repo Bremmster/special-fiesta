@@ -3,6 +3,7 @@ package com.karlson.crudapi.controller;
 import com.karlson.crudapi.model.Book;
 import com.karlson.crudapi.repository.BookRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,14 +16,17 @@ public class BookController {
 
     private final BookRepository repository;
 
+
     public BookController(BookRepository repository) {
         this.repository = repository;
     }
 
     //    C - Insert
     @PostMapping("/") // todo ad validation
-    public void create(@RequestBody Book book) {
-        repository.save(book);
+    public ResponseEntity<?> create(@RequestBody Book book) {
+        if (repository.save(book).equals(book)) {
+            return ResponseEntity.ok().build();
+        } else return ResponseEntity.internalServerError().build();
     }
 
     //    R - SelectOne

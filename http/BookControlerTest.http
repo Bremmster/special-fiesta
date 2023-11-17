@@ -1,3 +1,6 @@
+### check home
+GET http://localhost:8080
+
 ### Insert Book
 POST http://localhost:8080/api/v1/books/
 Content-Type: application/json
