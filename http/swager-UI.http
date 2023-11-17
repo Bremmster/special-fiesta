@@ -1,0 +1,7 @@
+### Look for APi docs
+GET http://localhost:8080/api-docs
+
+### look for Swager Ui
+
+GET http://localhost:8080/swagger-ui/index.html
+

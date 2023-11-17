@@ -20,6 +20,8 @@ public class SecurityConfig {
 
     private static final String API_URL_PATTERN = "api/v1/**";
     private static final String HOME_PATTERN = "/";
+    private static final String SWAGER_UI_PATTERN = "/swagger-ui/**";
+    private static final String API_DOCS = "/api-docs/**";
 /*
     @Bean
     @Deprecated
@@ -41,6 +43,8 @@ public class SecurityConfig {
                                 .ignoringRequestMatchers(
                                         mvcMatcherBuilder.pattern(API_URL_PATTERN), // todo make this correct, implementing correct metods.
                                         mvcMatcherBuilder.pattern(HOME_PATTERN),
+                                        mvcMatcherBuilder.pattern(SWAGER_UI_PATTERN),
+                                        mvcMatcherBuilder.pattern(API_DOCS),
                                         PathRequest.toH2Console()))
 
                 .headers(headersConfigurer ->
@@ -49,11 +53,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(mvcMatcherBuilder.pattern(API_URL_PATTERN)).permitAll()
+                                .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, SWAGER_UI_PATTERN)).permitAll()
+                                .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, API_DOCS)).permitAll()
                                 .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, HOME_PATTERN)).permitAll()
                                 //This line is optional in .authenticated() case as .anyRequest().authenticated()
                                 //would be applied for H2 path anyway
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .anyRequest().authenticated()
+//                                .anyRequest().authenticated() // this locks things down
+                                .anyRequest().permitAll() // todo remove
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(Customizer.withDefaults())
