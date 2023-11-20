@@ -73,7 +73,7 @@ public class SecurityConfig {
 
 
     @Bean
-    @Profile("!dev")
+    @Profile("prod")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> {
