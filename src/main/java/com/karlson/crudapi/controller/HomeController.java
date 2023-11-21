@@ -4,6 +4,8 @@ import com.karlson.crudapi.config.CrudAPIProperties;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @RestController
 public class HomeController {
 
@@ -16,5 +18,10 @@ public class HomeController {
     @RequestMapping("/")
     public CrudAPIProperties home() {
         return properties;
+    }
+
+    @RequestMapping("/protected")
+    public String protectedHome(Principal principal) {
+        return "You are now logged in " + principal.getName();
     }
 }

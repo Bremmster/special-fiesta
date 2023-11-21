@@ -49,7 +49,6 @@ public class BookController {
 
 
     //    D - Delete
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         repository.deleteById(id);
