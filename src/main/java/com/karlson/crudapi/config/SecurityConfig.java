@@ -111,7 +111,7 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/protected").authenticated();
                     auth.requestMatchers(HttpMethod.POST, "/api/v1/books/").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/v1/books/*").permitAll();
-                    auth.requestMatchers(HttpMethod.PUT, "/api/v1/books/").authenticated();
+                    auth.requestMatchers(HttpMethod.PUT, "/api/v1/books/*").authenticated();
                     auth.requestMatchers(HttpMethod.DELETE, "/api/v1/books/*").authenticated();
                     auth.anyRequest().authenticated();
                 })

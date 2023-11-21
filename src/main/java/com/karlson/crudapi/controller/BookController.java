@@ -30,7 +30,6 @@ public class BookController {
     }
 
     //    R - SelectOne
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @GetMapping("/{id}") // todo return a response body?
     public Optional<Book> findById(@PathVariable Integer id) {
         return repository.findById(id);

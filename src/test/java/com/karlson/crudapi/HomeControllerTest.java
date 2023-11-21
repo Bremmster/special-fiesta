@@ -43,13 +43,13 @@ public class HomeControllerTest {
     }
 
     @Test
-    void DoesNotExistShoouldReturn404() throws Exception {
+    void DoesNotExistShouldReturn404() throws Exception {
         this.mvc.perform(get("/italitanbistro"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void protectedHomeWhenAuthentictedThenSayHelloUsr() throws Exception {
+    void protectedHomeWhenAuthenticatedThenSayHelloUsr() throws Exception {
         MvcResult result = this.mvc.perform(post("/auth")
                         .with(httpBasic("usr", "password")))
                 .andExpect(status().isOk())
