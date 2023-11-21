@@ -37,9 +37,15 @@ public class HomeControllerTest {
     }
 
     @Test
-    void protectedHomeUnauthentictedThen404() throws Exception {
+    void protectedHomeUnauthenticatedThen401() throws Exception {
         this.mvc.perform(get("/protected"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void DoesNotExistShoouldReturn404() throws Exception {
+        this.mvc.perform(get("/italitanbistro"))
+                .andExpect(status().isNotFound());
     }
 
     @Test
