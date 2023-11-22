@@ -37,7 +37,7 @@ public class BookController {
 
 
     //    U - Update
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/") // todo figure out how this works. ATM @PathVariable is irrelevant to the updated book.
     public void update(@RequestBody Book book) {
         if (!repository.existsById(book.getId())) {

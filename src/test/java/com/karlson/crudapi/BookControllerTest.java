@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -28,15 +27,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public class BookControllerTest {
 
+    private static String token;
     private final String API = "/api/v1/books/";
-
     @Autowired
     private MockMvc mvc;
-
     @Autowired
     private BookRepository repository;
-
-    private static String token;
 
     @BeforeEach
     void addData() {
@@ -49,7 +45,7 @@ public class BookControllerTest {
     // Create
     @Test
     void testAddOneBook() throws Exception {
-
+        // todo write test
     }
 
     @Test
@@ -88,19 +84,19 @@ public class BookControllerTest {
         this.mvc.perform(put(API + "1"))
                 .andExpect(status().isUnauthorized());
     }
+
     @Test
     @Order(6)
     void successfullyUpdateOneBook() throws Exception {
-        System.out.println(token);
-        String payload = "{\"id\":3,\"author\":\"updated\",\"title\":\"updated\"}";
-        this.mvc.perform(put(API + "3")
+        System.out.println(token); // todo remove
+        String payload = "{\"id\":1,\"author\":\"updated\",\"title\":\"updated\"}";
+        this.mvc.perform(put(API)
                         .header("Authorization", "Bearer " + token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(payload))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload))
                 .andExpect(status().isOk());
 
     }
-
 
     // Delete should be protected
     @Test
@@ -108,6 +104,16 @@ public class BookControllerTest {
     void testDeleteWithoutTokenShouldReturn401() throws Exception {
         this.mvc.perform(delete(API + "1"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @Order(7)
+    void successfullyDeleteOneBook() throws Exception {
+        System.out.println(token); // todo remove
+        this.mvc.perform(delete(API + 1)
+                        .header("Authorization", "Bearer " + token)
+                        .content("nothing"))
+                        .andExpect(status().isOk());
     }
 
 }
