@@ -117,15 +117,6 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.DELETE, "/api/v1/books/*").authenticated();
                     auth.anyRequest().authenticated();
                 })
-               /* .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.authenticationEntryPoint((request, response, authException) -> {
-                            if (authException instanceof InsufficientAuthenticationException && request.getUserPrincipal() == null) {
-                                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                            } else {
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                            }
-                        })
-                )*/
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
