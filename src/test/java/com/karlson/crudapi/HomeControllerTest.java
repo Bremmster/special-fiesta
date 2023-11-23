@@ -82,4 +82,11 @@ public class HomeControllerTest {
         this.mvc.perform(get("/protected")).andExpect(status().isOk());
     }
 
+    @Test void attemptToLoginWithBadCredentials() throws Exception {
+        this.mvc.perform(post("/auth")
+                        .with(httpBasic("usr", "12345")))
+                .andExpect(status().isUnauthorized())
+                .andReturn();
+    }
+
 }
