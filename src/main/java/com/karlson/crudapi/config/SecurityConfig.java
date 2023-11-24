@@ -57,7 +57,11 @@ public class SecurityConfig {
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .userDetailsService(jpaUserDetailsService)
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .oauth2ResourceServer(oauth2ResourceServer ->
+                        oauth2ResourceServer.jwt(jwt ->
+                                jwt.decoder(jwtDecoder())
+                        )
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
                 .build();
