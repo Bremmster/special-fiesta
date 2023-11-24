@@ -3,10 +3,12 @@ package com.karlson.crudapi;
 import com.karlson.crudapi.config.SecurityConfig;
 import com.karlson.crudapi.controller.AuthController;
 import com.karlson.crudapi.controller.HomeController;
+import com.karlson.crudapi.repository.UserRepository;
 import com.karlson.crudapi.service.TokenService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -18,8 +20,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+//@SpringBootTest
 @WebMvcTest({HomeController.class, AuthController.class})
-@Import({SecurityConfig.class, TokenService.class})
+@Import({SecurityConfig.class, TokenService.class, UserRepository.class})
 @ActiveProfiles("test")
 public class HomeControllerTest {
 

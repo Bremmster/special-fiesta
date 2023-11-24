@@ -1,0 +1,11 @@
+### get home for all
+GET http://localhost:8080
+
+### try to log in
+POST http://localhost:8080/auth
+
+### get user Level acess
+GET http://localhost:8080/protected
+
+### get Admin level acess
+GET http://localhost:8080/adminonly
