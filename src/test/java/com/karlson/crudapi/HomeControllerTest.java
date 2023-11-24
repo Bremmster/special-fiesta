@@ -57,7 +57,6 @@ public class HomeControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-//        System.out.println(result.getResponse().getContentAsString()); // todo delete this row
         String token = result.getResponse().getContentAsString();
 
         this.mvc.perform(get("/italitanbistro")
