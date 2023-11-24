@@ -32,15 +32,18 @@ public class BookController {
     //    R - SelectOne
     @GetMapping("/{id}") // todo return a response body?
     public Optional<Book> findById(@PathVariable Integer id) {
+//        if (repository.findById(id) == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//        }
         return repository.findById(id);
     }
 
 
     //    U - Update
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/") // todo figure out how this works. ATM @PathVariable is irrelevant to the updated book.
-    public void update(@RequestBody Book book) {
-        if (!repository.existsById(book.getId())) {
+    @PutMapping("/{id}")
+    public void update(@RequestBody Book book, @PathVariable int id) {
+        if (!repository.existsById(book.getId()) || id != book.getId()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found!");
         }
         repository.save(book);

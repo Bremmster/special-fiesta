@@ -18,6 +18,8 @@ GET http://localhost:8080/api/v1/books/
 ### Find One
 GET http://localhost:8080/api/v1/books/2
 
+### Find One that dont exist
+GET http://localhost:8080/api/v1/books/98
 
 ### Delete by id
 DELETE http://localhost:8080/api/v1/books/202

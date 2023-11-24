@@ -6,7 +6,6 @@ import com.karlson.crudapi.model.Book;
 import com.karlson.crudapi.repository.BookRepository;
 import com.karlson.crudapi.service.TokenService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,44 +33,74 @@ public class BookControllerTest {
     @Autowired
     private BookRepository repository;
 
+
     @BeforeEach
     void addData() {
-//        when(repository.save(any(Book.class))).thenAnswer(i -> i.getArguments()[0]);
         repository.save(new Book("Author", "Title"));
         repository.save(new Book("Reodor Felgen", "Il Tempo Gigante"));
         repository.save(new Book("testAuthor", "testTitle"));
     }
 
-    // Create
-    @Test
-    void testAddOneBook() throws Exception {
-        // todo write test
-    }
-
-    @Test
-    @Order(1)
+    @BeforeEach
     void getJwtToken() throws Exception {
         MvcResult result = this.mvc.perform(post("/auth")
                         .with(httpBasic("usr", "password")))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        System.out.println(result.getResponse().getContentAsString()); // todo delete this row
+//        System.out.println(result.getResponse().getContentAsString()); // todo delete this row
 
         this.token = result.getResponse().getContentAsString();
     }
 
+    // Create
+    @Test
+    void testAddOneBook() throws Exception {
+        // todo write test
+        String payload = "{\"author\":\"Posted\",\"title\":\"Book\"}";
+        this.mvc.perform(post(API)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testAddOneBookWithToken() throws Exception {
+        // todo write test
+        String payload = "{\"author\":\"Posted\",\"title\":\"Book\"}";
+        this.mvc.perform(post(API)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload))
+                .andExpect(status().isOk());
+
+    }
+
     // Read
     @Test
-    @Order(2)
     void getOneBook() throws Exception {
-        this.mvc.perform(get(API + "1"))
+        this.mvc.perform(get(API + 1))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @Order(3)
-        // List
+    void getOneBookThatDontExistShouldReturn200AndEmptyBody() throws Exception {
+        this.mvc.perform(get(API + 10099))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+        //todo
+    void getOneBookWithToken() throws Exception {
+        this.mvc.perform(get(API + 2)
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
+    }
+
+
+    // List
+    @Test
     void getListOfBooks() throws Exception {
         this.mvc.perform(get(API))
                 .andExpect(status().isOk());
@@ -79,18 +108,15 @@ public class BookControllerTest {
 
     // Update should be protected
     @Test
-    @Order(4)
     void testUpdateWithoutTokenShouldReturn401() throws Exception {
-        this.mvc.perform(put(API + "1"))
+        this.mvc.perform(put(API + 2))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
-    @Order(6)
     void successfullyUpdateOneBook() throws Exception {
-        System.out.println(token); // todo remove
-        String payload = "{\"id\":1,\"author\":\"updated\",\"title\":\"updated\"}";
-        this.mvc.perform(put(API)
+        String payload = "{\"id\":2,\"author\":\"updated\",\"title\":\"updated\"}";
+        this.mvc.perform(put(API + 2)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload))
@@ -100,22 +126,18 @@ public class BookControllerTest {
 
     // Delete should be protected
     @Test
-    @Order(5)
     void testDeleteWithoutTokenShouldReturn401() throws Exception {
-        this.mvc.perform(delete(API + "1"))
+        this.mvc.perform(delete(API + 1))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
-    @Order(7)
     void successfullyDeleteOneBook() throws Exception {
-        System.out.println(token); // todo remove
         this.mvc.perform(delete(API + 1)
                         .header("Authorization", "Bearer " + token)
                         .content("nothing"))
-                        .andExpect(status().isOk());
+                .andExpect(status().isOk());
     }
-
 }
 /*
 För godkänt (G) på arbetetet skall följande krav uppfyllas:
