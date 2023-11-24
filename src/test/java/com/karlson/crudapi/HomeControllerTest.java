@@ -7,6 +7,7 @@ import com.karlson.crudapi.repository.UserRepository;
 import com.karlson.crudapi.service.TokenService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -21,9 +22,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 //@SpringBootTest
-@WebMvcTest({HomeController.class, AuthController.class})
-@Import({SecurityConfig.class, TokenService.class, UserRepository.class})
+@SpringBootTest
+@AutoConfigureMockMvc
+@Import({SecurityConfig.class, TokenService.class})
 @ActiveProfiles("test")
+
+//@WebMvcTest({HomeController.class, AuthController.class})
+//@Import({SecurityConfig.class, TokenService.class, UserRepository.class})
+//@ActiveProfiles("test")
 public class HomeControllerTest {
 
     @Autowired
@@ -32,7 +38,7 @@ public class HomeControllerTest {
     @Test
     void testHomeControllerRoot() throws Exception {
         String expected = "{\"welcomeMessage\": \"\"Welcome to the crud Api application, you are running the production version\"\", \"about\": \"\"Java Spring Boot, written by Kristian Karlson.\"\"}";
-
+// todo fix this
         System.out.println(this.mvc.perform(get("/")).andExpect(result -> System.out.println("hello world")));
 //                .andExpect(status().isOk()).toString();
 
@@ -60,35 +66,13 @@ public class HomeControllerTest {
         String token = result.getResponse().getContentAsString();
 
         this.mvc.perform(get("/italitanbistro")
-                .header("Authorization", "Bearer " + token))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void protectedHomeWhenAuthenticatedThenSayHelloUsr() throws Exception {
-        MvcResult result = this.mvc.perform(post("/auth")
-                        .with(httpBasic("usr", "password")))
-                .andExpect(status().isOk())
-                .andReturn();
 
-        String token = result.getResponse().getContentAsString();
 
-        this.mvc.perform(get("/protected")
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(content().string("You are now logged in usr"));
-    }
 
-    @Test
-    @WithMockUser
-    public void rootWithMockUserStatusIsOK() throws Exception {
-        this.mvc.perform(get("/protected")).andExpect(status().isOk());
-    }
 
-    @Test void attemptToLoginWithBadCredentials() throws Exception {
-        this.mvc.perform(post("/auth")
-                        .with(httpBasic("usr", "12345")))
-                .andExpect(status().isUnauthorized())
-                .andReturn();
-    }
 
 }

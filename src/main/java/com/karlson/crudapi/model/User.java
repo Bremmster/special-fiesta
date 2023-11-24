@@ -1,6 +1,7 @@
 package com.karlson.crudapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +12,9 @@ public class User {
     private Long id;
 
     @Column(unique = true)
+    @NotBlank
     private String name;
+    @NotBlank
     private String password;
     private String roles = "user";
 
