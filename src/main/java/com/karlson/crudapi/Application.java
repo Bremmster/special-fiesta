@@ -26,10 +26,10 @@ public class Application {
         return args -> {
 
             if (userRepository.findByName("usr").isEmpty()) {
-                userRepository.save(new User("usr", passwordEncoder.encode("password"), "ROLES_USER"));
+                userRepository.save(new User("usr", passwordEncoder.encode("password")));
             }
             if (userRepository.findByName("admin").isEmpty()) {
-                userRepository.save(new User("admin", passwordEncoder.encode("password"), "ROLES_USER,ROLES_ADMIN"));
+                userRepository.save(new User("admin", passwordEncoder.encode("password")));
             }
             if (bookRepository.findById(1).isEmpty()) {
                 bookRepository.save(new Book("Douglas Adams", "Dirk Gently's Holistic Detective Agency"));

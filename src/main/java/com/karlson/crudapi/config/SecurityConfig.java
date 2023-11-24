@@ -65,12 +65,16 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/register").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/protected").authenticated();
                     auth.requestMatchers(HttpMethod.POST, "/api/v1/books/").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/v1/books/*").permitAll();
                     auth.requestMatchers(HttpMethod.PUT, "/api/v1/books/*").authenticated();
                     auth.requestMatchers(HttpMethod.DELETE, "/api/v1/books/*").authenticated();
+                    auth.requestMatchers(HttpMethod.GET, "/protected").authenticated();
+                    auth.requestMatchers(HttpMethod.GET, "/isuser").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers(HttpMethod.GET, "/isuser").authenticated(); // remove
+                    auth.requestMatchers(HttpMethod.GET, "/isadmin").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)

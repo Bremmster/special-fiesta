@@ -22,10 +22,10 @@ public class BookController {
     }
 
     //    C - Insert
-    @PostMapping("/") // todo ad validation
+    @PostMapping("/") // todo ad validation respon that book is saved
     public ResponseEntity<?> create(@RequestBody Book book) {
         if (repository.save(book).equals(book)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("Book saved");
         } else return ResponseEntity.internalServerError().build();
     }
 
@@ -42,9 +42,13 @@ public class BookController {
     //    U - Update
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void update(@RequestBody Book book, @PathVariable int id) {
-        if (!repository.existsById(book.getId()) || id != book.getId()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found!");
+    public void update(@RequestBody Book book, @PathVariable int id) throws Exception {
+        try {
+            if (!repository.existsById(book.getId()) || id != book.getId()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Bad book format");
         }
         repository.save(book);
     }

@@ -3,6 +3,11 @@ GET http://localhost:8080
 
 ### try to log in
 POST http://localhost:8080/auth
+Content-Type: application/json
+{
+"name": "user",
+"password": "password"
+}
 
 ### get user Level acess
 GET http://localhost:8080/protected

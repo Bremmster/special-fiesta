@@ -13,19 +13,17 @@ public class User {
     @Column(unique = true)
     private String name;
     private String password;
-    private String roles;
+    private String roles = "user";
 
-    public User(Long id, String name, String password, String roles) {
+    public User(Long id, String name, String password) {
         this.id = id;
         this.name = name;
         this.password = password;
-        this.roles = roles;
     }
 
-    public User(String name, String password, String roles) {
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.roles = roles;
     }
 
     public User() {
