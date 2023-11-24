@@ -1,7 +1,6 @@
 package com.karlson.crudapi.controller;
 
 import com.karlson.crudapi.config.CrudAPIProperties;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,11 +21,10 @@ public class HomeController {
         return properties;
     }
 
-    @GetMapping("/protected") // reach with token
+    @GetMapping("/protected")
     public String protectedHome(Principal principal) {
         return String.format("You are now logged i with token as %s", principal.getName());
     }
-
 
 
 }

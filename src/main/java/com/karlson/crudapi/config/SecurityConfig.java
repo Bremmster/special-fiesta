@@ -18,15 +18,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -44,21 +41,6 @@ public class SecurityConfig {
         this.jpaUserDetailsService = jpaUserDetailsService;
     }
 
-    /*@Bean
-    @Deprecated
-    public InMemoryUserDetailsManager user() { // todo come back here and look
-        return new InMemoryUserDetailsManager(
-                User.withUsername("usr")
-                        .password("{noop}password")
-                        .authorities("read")
-                        .build()
-        );
-    }
-
-     */
-
-
-
     @Bean
 //    @Profile("prod")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -72,9 +54,6 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.PUT, "/api/v1/books/*").authenticated();
                     auth.requestMatchers(HttpMethod.DELETE, "/api/v1/books/*").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/protected").authenticated();
-                    auth.requestMatchers(HttpMethod.GET, "/isuser").hasAnyRole("USER", "ADMIN");
-                    auth.requestMatchers(HttpMethod.GET, "/isuser").authenticated(); // remove
-                    auth.requestMatchers(HttpMethod.GET, "/isadmin").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
