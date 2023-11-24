@@ -42,8 +42,8 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Book book, @PathVariable int id) {
 
-        if (book.getId() != null && book.getId() == id) {
-//            if (book.getId() == id) {
+        if (book.getAuthor() != null && book.getId() == id) {
+//
                 var updatedBook = bookService.updateBook(book);
 
                 if (updatedBook != null) {

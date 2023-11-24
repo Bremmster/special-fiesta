@@ -5,6 +5,8 @@ import com.karlson.crudapi.config.SecurityConfig;
 import com.karlson.crudapi.model.Book;
 import com.karlson.crudapi.repository.BookRepository;
 import com.karlson.crudapi.service.TokenService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +43,18 @@ public class BookControllerTest {
         repository.save(new Book("testAuthor", "testTitle"));
     }
 
+    @BeforeAll
+    static void beforeAll() {
+
+    }
+
     @BeforeEach
     void getJwtToken() throws Exception {
         MvcResult result = this.mvc.perform(post("/auth")
                         .with(httpBasic("usr", "password")))
                 .andExpect(status().isOk())
                 .andReturn();
-        this.token = result.getResponse().getContentAsString();
+        token = result.getResponse().getContentAsString();
     }
 
     // Create
@@ -103,7 +110,7 @@ public class BookControllerTest {
 
     @Test
     void getOneBookWithToken() throws Exception {
-        this.mvc.perform(get(API + 2)
+        this.mvc.perform(get(API + 3)
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
@@ -117,16 +124,11 @@ public class BookControllerTest {
     }
 
     // Update should be protected
-    @Test
-    void testUpdateWithoutTokenShouldReturn401() throws Exception {
-        this.mvc.perform(put(API + 2))
-                .andExpect(status().isUnauthorized());
-    }
 
     @Test
     void successfullyUpdateOneBook() throws Exception {
-        String payload = "{\"id\":2,\"author\":\"updated\",\"title\":\"updated\"}";
-        this.mvc.perform(put(API + 2)
+        String payload = "{\"id\":1,\"author\":\"updated\",\"title\":\"updated\"}";
+        this.mvc.perform(put(API + 1)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload))
@@ -151,6 +153,11 @@ public class BookControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload))
                 .andExpect(status().isMethodNotAllowed());
+    }
+    @Test
+    void testUpdateWithoutTokenShouldReturn401() throws Exception {
+        this.mvc.perform(put(API + 2))
+                .andExpect(status().isUnauthorized());
     }
 
 

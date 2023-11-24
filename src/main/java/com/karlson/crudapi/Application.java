@@ -34,7 +34,6 @@ public class Application {
             if (bookRepository.findById(1).isEmpty()) {
                 bookRepository.save(new Book("Douglas Adams", "Dirk Gently's Holistic Detective Agency"));
             }
-
         };
     }
 }

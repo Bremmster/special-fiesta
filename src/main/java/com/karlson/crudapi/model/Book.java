@@ -23,6 +23,12 @@ public class Book {
         this.title = title;
     }
 
+    public Book(Integer id, String author, String title) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+    }
+
     public Integer getId() {
         return id;
     }
