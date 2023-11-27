@@ -2,9 +2,20 @@
 Första inlämningsuppgiften i API och webservices
 
 
-Få igång appliaktionen
+Få igång applikation
+
+generera
+
+I zipp filen finns en 
+
+kräver java 21
+mySql databas
+
+
+
+
 Finns två profiler dev och prod
-dev annävnder sig av en h2 in memory databas som man kan hitta på /h2-console TODO uppdatera
+dev anävnder sig av en h2 in memory databas som man kan hitta på /h2-console TODO uppdatera
 
 
 prod använder ->

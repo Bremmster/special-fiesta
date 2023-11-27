@@ -34,8 +34,6 @@ public class Application {
                 bookRepository.save(new Book("Randall Munroe", "How To"));
                 bookRepository.save(new Book("Ulf Ellervik", "Ond Kemi"));
             }
-
-
         };
     }
 }
