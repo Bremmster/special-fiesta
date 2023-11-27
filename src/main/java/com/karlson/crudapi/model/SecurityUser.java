@@ -1,6 +1,5 @@
 package com.karlson.crudapi.model;
 
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,15 +24,10 @@ public class SecurityUser implements UserDetails {
     public String getPassword() {
         return user.getPassword();
     }
-    @Override  // At launch there was only one category "user"
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user
-                .getRoles()
-                .split(","))
-                .map(SimpleGrantedAuthority::new)
-                .toList();
+        return null;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

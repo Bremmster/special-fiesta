@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Book {
@@ -16,8 +15,10 @@ public class Book {
     private String author;
     @NotBlank
     private String title;
+
     public Book() {
     }
+
     public Book(String author, String title) {
         this.author = author;
         this.title = title;
