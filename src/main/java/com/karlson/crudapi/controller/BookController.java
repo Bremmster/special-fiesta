@@ -1,66 +1,70 @@
 package com.karlson.crudapi.controller;
 
 import com.karlson.crudapi.model.Book;
-import com.karlson.crudapi.repository.BookRepository;
-import org.springframework.http.HttpStatus;
+import com.karlson.crudapi.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
 
-    private final BookRepository repository;
+    private final BookService bookService;
 
 
-    public BookController(BookRepository repository) {
-        this.repository = repository;
+    public BookController(BookService repository) {
+        this.bookService = repository;
     }
 
-    //    C - Insert
-    @PostMapping("/") // todo ad validation
+    @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody Book book) {
-        if (repository.save(book).equals(book)) {
-            return ResponseEntity.ok().build();
-        } else return ResponseEntity.internalServerError().build();
+
+        var response = bookService.save(book);
+
+        if (response.equals(book)) {
+            return ResponseEntity.accepted().body(response);
+        } else return ResponseEntity.badRequest().build();
     }
 
-    //    R - SelectOne
-    @GetMapping("/{id}") // todo return a response body?
-    public Optional<Book> findById(@PathVariable Integer id) {
-//        if (repository.findById(id) == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-        return repository.findById(id);
-    }
-
-
-    //    U - Update
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/{id}")
-    public void update(@RequestBody Book book, @PathVariable int id) {
-        if (!repository.existsById(book.getId()) || id != book.getId()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found!");
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Integer id) {
+        var book = bookService.findBook(id);
+        if (book.getAuthor() != null) {
+            return ResponseEntity.ok(book);
         }
-        repository.save(book);
+        return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody Book book, @PathVariable int id) {
 
-    //    D - Delete
+        if (book.getAuthor() != null && book.getId() == id) {
+
+            var updatedBook = bookService.updateBook(book);
+
+            if (updatedBook != null) {
+                return ResponseEntity.ok(updatedBook);
+            }
+
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        repository.deleteById(id);
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        boolean result = bookService.deleteById(id);
+
+        if (result) return ResponseEntity.accepted().build();
+
+        return ResponseEntity.badRequest().body("Delete request missing id.");
     }
 
 
-    //    L - SelectAll
     @GetMapping("/")
     public List<Book> findAll() {
-        return repository.findAll();
+        return bookService.findAll();
     }
-
 }
+

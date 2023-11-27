@@ -4,18 +4,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-//import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank
     private String author;
+    @NotBlank
     private String title;
+
     public Book() {
     }
+
     public Book(String author, String title) {
+        this.author = author;
+        this.title = title;
+    }
+
+    public Book(Integer id, String author, String title) {
+        this.id = id;
         this.author = author;
         this.title = title;
     }

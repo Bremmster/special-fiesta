@@ -1,6 +1,7 @@
 package com.karlson.crudapi.controller;
 
 import com.karlson.crudapi.config.CrudAPIProperties;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,13 +16,16 @@ public class HomeController {
         this.properties = properties;
     }
 
-    @RequestMapping("/")
+    @GetMapping("/")
+//    @RequestMapping("/")
     public CrudAPIProperties home() {
         return properties;
     }
 
-    @RequestMapping("/protected")
+    @GetMapping("/protected")
     public String protectedHome(Principal principal) {
-        return "You are now logged in " + principal.getName();
+        return String.format("You are now logged i with token as %s", principal.getName());
     }
+
+
 }
