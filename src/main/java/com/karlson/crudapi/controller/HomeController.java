@@ -16,7 +16,8 @@ public class HomeController {
         this.properties = properties;
     }
 
-    @RequestMapping("/")
+    @GetMapping("/")
+//    @RequestMapping("/")
     public CrudAPIProperties home() {
         return properties;
     }

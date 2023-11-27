@@ -28,12 +28,14 @@ public class Application {
             if (userRepository.findByName("usr").isEmpty()) {
                 userRepository.save(new User("usr", passwordEncoder.encode("password")));
             }
-            if (userRepository.findByName("admin").isEmpty()) {
-                userRepository.save(new User("admin", passwordEncoder.encode("password")));
-            }
-            if (bookRepository.findById(1).isEmpty()) {
+
+            if (bookRepository.findAll().isEmpty()) {
                 bookRepository.save(new Book("Douglas Adams", "Dirk Gently's Holistic Detective Agency"));
+                bookRepository.save(new Book("Randall Munroe", "How To"));
+                bookRepository.save(new Book("Ulf Ellervik", "Ond Kemi"));
             }
+
+
         };
     }
 }

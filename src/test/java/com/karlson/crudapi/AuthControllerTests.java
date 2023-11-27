@@ -58,13 +58,32 @@ public class AuthControllerTests {
     }
 
     @Test
-    void createNewUser() throws Exception {
+    void createNewUserSuccess() throws Exception {
         String payload = "{\"name\":\"createTestUser\",\"password\":\"secret\"}";
         this.mvc.perform(post("/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void createNewUserBlankDetailsSuccess() throws Exception {
+        String payload = "{\"name\":\" \",\"password\":\"secret\"}";
+        this.mvc.perform(post("/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void createNewUserBadFormattedJson() throws Exception {
+        String payload = "{\"createTestUser\",\"password\":\"secret\"}";
+        this.mvc.perform(post("/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload))
+                .andExpect(status().isBadRequest());
+    }
+
     @Test
     void createNewUserButBadPayloadShouldFail() throws Exception {
         String payload = "";

@@ -33,7 +33,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userRepository.save(user);
-        return ResponseEntity.ok("user created");
+
+        var newUser = userRepository.save(user);
+
+        if (newUser.equals(user)){
+            return ResponseEntity.ok(newUser);
+        }
+        return ResponseEntity.badRequest().body("bad format or blank names");
     }
 }

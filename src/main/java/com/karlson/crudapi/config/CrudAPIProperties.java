@@ -9,7 +9,8 @@ public record CrudAPIProperties(
         String getToken,
         String books,
         String noAuth,
+        String swagger,
         String about
-        ) {
+) {
 }
 
