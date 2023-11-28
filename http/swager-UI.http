@@ -1,0 +1,4 @@
+### look for Swager Ui
+
+GET http://localhost:8080/swagger-ui/index.html
+

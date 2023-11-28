@@ -2,9 +2,11 @@ package com.karlson.crudapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-class CrudApiApplicationTests {
+@ActiveProfiles("test")
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
