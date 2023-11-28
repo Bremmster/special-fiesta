@@ -2,7 +2,7 @@
 Första inlämningsuppgiften i API och webservices. Ett restAPI med några säkrade endpoints.
 Projektet är till för att köra på localhost för test av Springboot SecurityFilterChain, UserDetails och JWT tokens. 
 
-Kräver Java 21 och en mySQL databas
+Kräver Java 21 och en mySQL version 8 eller senare.
 
 Få igång applikation
 1. packa upp projektet till valfri mapp
@@ -27,16 +27,8 @@ Få igång applikation
 6. Starta applikationen.
 
 ### Användning
-Vid uppstart generas användaren "usr" pass: "password" om den inte redan finns i user table. Är book table tom skapas tre böcker.  
-
-#### Endpoints
-
-
-
-
-
-### Api dokumentation
-På http://localhost:8080/swagger-ui/index.html finns automatiskt generad documentation men det är inte korrekt konfigurerad och far med osanningar.
+Vid uppstart generas användaren "usr" pass: "password" om den inte redan finns i user table.  
+Är book table tom skapas tre böcker.  
 
 #### Endpoints
 GET http://localhost:8080/
@@ -52,38 +44,38 @@ Skicka en Json body för att lägga till användare.
 ```
 Returnerar din användare om det lyckats 
 
-POST http://localhost:8080/auth
-Skicka Basic Auth med användarnamn och lösenord
-Returnerar en Token
+POST http://localhost:8080/auth  
+Skicka Basic Auth med användarnamn och lösenord  
+Returnerar en Token  
 
 
-GET http://localhost:8080/protected
-Skicka med din Bearer Token.
-Returnerar en sträng att du är inloggad och ditt användarnamn.
+GET http://localhost:8080/protected  
+Skicka med din Bearer Token.  
+Returnerar en sträng att du är inloggad och ditt användarnamn.  
 
-GET http://localhost:8080/api/v1/books/
-Alla kan nå endpoint.
-Returnerar en lista över alla böcker.
+GET http://localhost:8080/api/v1/books/  
+Alla kan nå endpoint.  
+Returnerar en lista över alla böcker.  
 
-GET http://localhost:8080/api/v1/books/{id}
-Alla kan nå endpoint.
+GET http://localhost:8080/api/v1/books/{id}  
+Alla kan nå endpoint.  
 Returnerar en specifik bok om den finns i databasen.
 
 
-POST http://localhost:8080/api/v1/books/
-Alla kan nå endpoint.
-Skicka en book som Json body
+POST http://localhost:8080/api/v1/books/  
+Alla kan nå endpoint.  
+Skicka en book som Json body  
 ```
 {
     "author": "Lars Imby",
     "title": "Nya Svenska Fågelboken"
 }
 ```
-Om boken sparas returner den.
+Om boken sparas returner den.  
 
-PUT http://localhost:8080/api/v1/books/{id}
-Kräver Token.
-Skicka en bok med id för att uppdatera en befintlig bok
+PUT http://localhost:8080/api/v1/books/{id}  
+Kräver Token.  
+Skicka en bok med id för att uppdatera en befintlig bok  
 ```
 {
     "id": {id}
@@ -91,14 +83,15 @@ Skicka en bok med id för att uppdatera en befintlig bok
     "title": "Nya Svenska Fågelboken"
 }
 ```
-Lyckas uppdateringen returneras den uppdaterade boken
+Lyckas uppdateringen returneras den uppdaterade boken  
 
+DELETE http://localhost:8080/api/v1/books/{id}  
+Kräver Token.  
+Returnerar http 202 när det lyckats 
 
-
-
-DELETE http://localhost:8080/api/v1/books/{id}
-Kräver Token.
-Todo!!!
+### Swagger Api dokumentation
+GET http://localhost:8080/swagger-ui/index.html
+Finns automatiskt generad documentation, dock stämmer inte utfallet men det är inte korrekt konfigurerad och far med osanningar.
 
 
 
