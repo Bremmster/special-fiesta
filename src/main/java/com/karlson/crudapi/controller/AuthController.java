@@ -1,7 +1,7 @@
 package com.karlson.crudapi.controller;
 
 import com.karlson.crudapi.model.User;
-import com.karlson.crudapi.repository.UserRepository;
+import com.karlson.crudapi.service.JpaUserDetailsService;
 import com.karlson.crudapi.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
-    private final UserRepository userRepository;
+    private final JpaUserDetailsService jpaUserDetailsService;
     private final TokenService tokenService;
 
-    public AuthController(UserRepository userRepository, TokenService tokenService) {
-        this.userRepository = userRepository;
+    public AuthController(JpaUserDetailsService jpaUserDetailsService, TokenService tokenService) {
+        this.jpaUserDetailsService = jpaUserDetailsService;
         this.tokenService = tokenService;
     }
 
@@ -34,7 +34,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody User user) {
 
-        var newUser = userRepository.save(user);
+        var newUser = jpaUserDetailsService.save(user);
 
         if (newUser.equals(user)){
             return ResponseEntity.ok(newUser);
