@@ -110,7 +110,7 @@ public class BookControllerTest {
 
     @Test
     void getOneBookWithToken() throws Exception {
-        this.mvc.perform(get(API + 3)
+        this.mvc.perform(get(API + 1)
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
