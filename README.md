@@ -1,37 +1,38 @@
 # special-fiesta
+
 Första inlämningsuppgiften i API och webservices. Ett restAPI med några säkrade endpoints.
 Projektet är till för att köra på localhost för test av Springboot SecurityFilterChain, UserDetails och JWT tokens. 
 
 Kräver Java 21 och en mySQL version 8 eller senare.
 
 Få igång applikation
-1. packa upp projektet till valfri mapp
-   2. öppna projektet i valfritt IDE
-      3. Kontrollera att det finns ssl nycklar i mappen src/main/resources/certs det ska vara en private.pem och en certificate.pem
-         4. Saknas SSL certifikat ladda ner https://www.openssl.org/source/ och installera.
-         5. placera sen en terminal i mappen src/main/resources/certs och kör kommandot  
-           ~~~
-            openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 \
-             -nodes -keyout private.pem -out certificate.pem -subj "/CN=localhost.com" \
-             -addext "subjectAltName=DNS:example.com,DNS:*.example.com,IP:127.0.0.1"
-         ~~~
-         Kolla att namnen på certifikaten stämmer mot det som konfigurerats i de två application.properties filerna.
-         ###         Dela aldrig dina nycklar med obehöriga!
-4. Kör alla test i src/test/java/com/karlson/crudapi.
-5. Konfigurera databas så uppgifterna stämmer med src/main/resources/application.properties
+1. packa upp projektet till valfri mapp  
+2. öppna projektet i valfritt IDE  
+3. Kontrollera att det finns ssl nycklar i mappen src/main/resources/certs det ska vara en private.pem och en certificate.pem
+4. Saknas SSL certifikat ladda ner https://www.openssl.org/source/ och installera.
+5. placera sen en terminal i mappen src/main/resources/certs och kör kommandot  
+     ~~~
+      openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 \
+       -nodes -keyout private.pem -out certificate.pem -subj "/CN=localhost.com" \
+       -addext "subjectAltName=DNS:example.com,DNS:*.example.com,IP:127.0.0.1"
+   ~~~
+   Kolla att namnen på certifikaten stämmer mot det som konfigurerats i de två application.properties filerna.
+   ###         Dela aldrig dina nycklar med obehöriga!
+6. Kör alla test i src/test/java/com/karlson/crudapi.
+7. Konfigurera databas så uppgifterna stämmer med src/main/resources/application.properties
    ```
    spring.datasource.url=jdbc:mysql://localhost:3306/crud_api
    spring.datasource.username=user
    spring.datasource.password=password
    ```
-6. Ändra inställningar för applikationen så den kör med profil dev.  
+8. Ändra inställningar för applikationen så den kör med profil dev.  
    klicka på de tre punkterna  
    <img src="images/Screenshot_20231128_144940.png">  
-   Mata in profil  
+   Environment variables  
    <img src="images/Screenshot_20231128_144842.png">  
-   skriv in: spring.profiles.active=dev  
+   skriv in: ``` spring.profiles.active=dev ```  
    
-7. Starta applikationen
+9. Starta applikationen
    
 
 ### Användning
@@ -99,12 +100,12 @@ Returnerar http 202 när det lyckats
 
 ### Swagger Api dokumentation
 GET http://localhost:8080/swagger-ui/index.html
-Finns automatiskt generad documentation, dock stämmer inte utfallet men det är inte korrekt konfigurerad och far med osanningar.
-
-
+Finns automatiskt generad documentation, den är inte korrekt konfigurerad och far med osanningar.
 
 ### Reflektioner
+Varför vet man förs efteråt vad för applikation man vill skapa?
+Nästa gång ska jag börja med testen mycket tidigare, det underlättar utvecklingen otroligt mycket.
+Att använda olika profiler för utvecklingen var otroligt smidigt då slipper man test som kontaminerar databasen.  
+Men samtidigt ska man inte glöma av att testa mot en faktisk databas, utfallet kan skilja sig åt.
 
-
-
-Project bord https://github.com/users/Bremmster/projects/8/views/1
+<img src="images/Screenshot_20231128_151719.png">
