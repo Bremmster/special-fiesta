@@ -6,6 +6,7 @@ import com.karlson.crudapi.model.Book;
 import com.karlson.crudapi.model.User;
 import com.karlson.crudapi.repository.BookRepository;
 import com.karlson.crudapi.repository.UserRepository;
+import com.karlson.crudapi.service.JpaUserDetailsService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,11 +23,11 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(BookRepository bookRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    CommandLineRunner commandLineRunner(BookRepository bookRepository, JpaUserDetailsService userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
 
             if (userRepository.findByName("usr").isEmpty()) {
-                userRepository.save(new User("usr", passwordEncoder.encode("password")));
+                userRepository.save(new User("usr", "password"));
             }
 
             if (bookRepository.findAll().isEmpty()) {

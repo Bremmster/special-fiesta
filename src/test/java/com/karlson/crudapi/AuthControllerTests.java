@@ -72,7 +72,7 @@ public class AuthControllerTests {
         this.mvc.perform(post("/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload))
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
