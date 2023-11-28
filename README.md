@@ -24,7 +24,15 @@ Få igång applikation
    spring.datasource.username=user
    spring.datasource.password=password
    ```
-6. Starta applikationen.
+6. Ändra inställningar för applikationen så den kör med profil dev.  
+   klicka på de tre punkterna  
+   <img src="images/Screenshot_20231128_144940.png">  
+   Mata in profil  
+   <img src="images/Screenshot_20231128_144842.png">  
+   skriv in: spring.profiles.active=dev  
+   
+7. Starta applikationen
+   
 
 ### Användning
 Vid uppstart generas användaren "usr" pass: "password" om den inte redan finns i user table.  
@@ -95,6 +103,7 @@ Finns automatiskt generad documentation, dock stämmer inte utfallet men det är
 
 
 
+### Reflektioner
 
 
 
