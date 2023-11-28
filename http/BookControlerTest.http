@@ -1,3 +1,5 @@
+
+
 ### check home
 GET http://localhost:8080
 
@@ -10,7 +12,6 @@ Content-Type: application/json
   "title": "Life as me"
 }
 
-
 ### Find all
 GET http://localhost:8080/api/v1/books/
 
@@ -22,11 +23,11 @@ GET http://localhost:8080/api/v1/books/2
 GET http://localhost:8080/api/v1/books/98
 
 ### Delete by id
-DELETE http://localhost:8080/api/v1/books/202
+DELETE http://localhost:8080/api/v1/books/3
 
 
 ### Update a book
-PUT http://localhost:8080/api/v1/books/
+PUT http://localhost:8080/api/v1/books/2
 Content-Type: application/json
 
 {

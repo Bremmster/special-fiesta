@@ -144,6 +144,19 @@ public class BookControllerTest {
                         .content(payload))
                 .andExpect(status().isBadRequest());
     }
+    @Test
+    void updateWithBookThatDoesNotExistShouldFail() throws Exception {
+        String payload = "{\n" +
+                "    \"id\": 1024\n" +
+                "    \"author\": \"Lars Imby\",\n" +
+                "    \"title\": \"Nya Svenska Fågelboken\"\n" +
+                "}"; // todo add body
+        this.mvc.perform(put(API + 1024)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload))
+                .andExpect(status().isBadRequest());
+    }
 
     @Test
     void updateWithEmptyPathVariableShouldFail() throws Exception {
