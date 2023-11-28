@@ -1,9 +1,7 @@
 package com.karlson.crudapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.karlson.crudapi.service.EncodePasswords;
 import jakarta.persistence.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
@@ -14,9 +12,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
+    @NotBlank
     private String name;
-    @Column(nullable = false)
+    @NotBlank
     private String password;
 
 

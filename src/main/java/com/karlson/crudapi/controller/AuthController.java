@@ -33,12 +33,11 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-
-        var newUser = jpaUserDetailsService.save(user);
-
-        if (newUser.equals(user)){
+        try {
+            var newUser = jpaUserDetailsService.save(user);
             return ResponseEntity.ok(newUser);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("bad format or blank name/password");
         }
-        return ResponseEntity.badRequest().body("bad format or blank names");
     }
 }

@@ -17,7 +17,6 @@ public class HomeController {
     }
 
     @GetMapping("/")
-//    @RequestMapping("/")
     public CrudAPIProperties home() {
         return properties;
     }

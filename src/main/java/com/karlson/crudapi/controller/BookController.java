@@ -5,8 +5,6 @@ import com.karlson.crudapi.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
@@ -20,34 +18,36 @@ public class BookController {
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody Book book) {
-
-        var response = bookService.save(book);
-
-        if (response.equals(book)) {
+        try {
+            var response = bookService.save(book);
             return ResponseEntity.accepted().body(response);
-        } else return ResponseEntity.badRequest().build();
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id) {
-        var book = bookService.findBook(id);
-        if (book.getAuthor() != null) {
+        try {
+            var book = bookService.findBook(id);
             return ResponseEntity.ok(book);
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Book book, @PathVariable int id) {
 
         if (book.getId() != null && book.getId() == id) {
-
-            var updatedBook = bookService.updateBook(book);
-
-            if (updatedBook != null) {
+            try {
+                var updatedBook = bookService.updateBook(book);
                 return ResponseEntity.ok(updatedBook);
+            } catch (Exception e) {
+                // do some logging here
             }
-
         }
         return ResponseEntity.badRequest().build();
     }
@@ -62,9 +62,13 @@ public class BookController {
     }
 
 
-    @GetMapping("/")
-    public List<Book> findAll() {
-        return bookService.findAll();
+    @GetMapping("/") // todod List<Book>
+    public ResponseEntity<?> findAll() {
+        try {
+            return ResponseEntity.ok(bookService.findAll());
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
 
