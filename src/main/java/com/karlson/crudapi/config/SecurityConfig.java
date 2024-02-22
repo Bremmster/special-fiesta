@@ -30,7 +30,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    public static final String[] SWAGGER_WHITE_LIST = {"/swagger-resources",
+    private static final String[] SWAGGER_WHITE_LIST = {"/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
             "/configuration/security",

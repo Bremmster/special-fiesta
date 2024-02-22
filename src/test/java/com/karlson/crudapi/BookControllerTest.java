@@ -5,7 +5,6 @@ import com.karlson.crudapi.config.SecurityConfig;
 import com.karlson.crudapi.model.Book;
 import com.karlson.crudapi.repository.BookRepository;
 import com.karlson.crudapi.service.TokenService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,17 +34,16 @@ public class BookControllerTest {
     @Autowired
     private BookRepository repository;
 
+    @BeforeAll
+    static void beforeAll() {
+
+    }
 
     @BeforeEach
     void addData() {
         repository.save(new Book("Author", "Title"));
         repository.save(new Book("Reodor Felgen", "Il Tempo Gigante"));
         repository.save(new Book("testAuthor", "testTitle"));
-    }
-
-    @BeforeAll
-    static void beforeAll() {
-
     }
 
     @BeforeEach
@@ -76,6 +74,7 @@ public class BookControllerTest {
                         .content(payload))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     void testAddOneEmptyBookShouldFail() throws Exception {
         String payload = "{create troubles}";
@@ -95,6 +94,7 @@ public class BookControllerTest {
                 .andExpect(status().isAccepted());
 
     }
+
     // Read
     @Test
     void getOneBook() throws Exception {
@@ -144,6 +144,7 @@ public class BookControllerTest {
                         .content(payload))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     void updateWithBookThatDoesNotExistShouldFail() throws Exception {
         String payload = "{\n" +
@@ -167,13 +168,12 @@ public class BookControllerTest {
                         .content(payload))
                 .andExpect(status().isMethodNotAllowed());
     }
+
     @Test
     void testUpdateWithoutTokenShouldReturn401() throws Exception {
         this.mvc.perform(put(API + 2))
                 .andExpect(status().isUnauthorized());
     }
-
-
 
 
     // Delete should be protected
